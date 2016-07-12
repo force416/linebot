@@ -40,28 +40,28 @@
 			<artifactId>line-bot-api-client</artifactId>
 			<version>1.0</version>
 			<scope>system</scope>
-			<systemPath>${project.basedir}/src/main/resources/lib/line-bot-api-client-0.2.0-SNAPSHOT.jar</systemPath>
+			<systemPath>${basedir}/src/main/resources/lib/line-bot-api-client-0.2.0-SNAPSHOT.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>com.line</groupId>
 			<artifactId>line-bot-model</artifactId>
 			<version>1.0</version>
 			<scope>system</scope>
-			<systemPath>${project.basedir}/src/main/resources/lib/line-bot-model-0.2.0-SNAPSHOT.jar</systemPath>
+			<systemPath>${basedir}/src/main/resources/lib/line-bot-model-0.2.0-SNAPSHOT.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>com.line</groupId>
 			<artifactId>line-bot-spring-boot</artifactId>
 			<version>1.0</version>
 			<scope>system</scope>
-			<systemPath>${project.basedir}/src/main/resources/lib/line-bot-spring-boot-0.2.0-SNAPSHOT.jar</systemPath>
+			<systemPath>${basedir}/src/main/resources/lib/line-bot-spring-boot-0.2.0-SNAPSHOT.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>com.line</groupId>
 			<artifactId>line-bot-spring-servlet</artifactId>
 			<version>1.0</version>
 			<scope>system</scope>
-			<systemPath>${project.basedir}/src/main/resources/lib/line-bot-servlet-0.2.0-SNAPSHOT.jar</systemPath>
+			<systemPath>${basedir}/src/main/resources/lib/line-bot-servlet-0.2.0-SNAPSHOT.jar</systemPath>
 		</dependency>
 	</dependencies>
 	<build>
