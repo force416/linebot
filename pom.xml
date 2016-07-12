@@ -13,12 +13,6 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-	<repositories>
-		<repository>
-			<id>localrepo</id>
-			<url>file://${project.basedir}/resources/lib</url>
-		</repository>
-	</repositories>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -47,7 +41,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.line</groupId>
-			<artifactId>ine-bot-model</artifactId>
+			<artifactId>line-bot-model</artifactId>
 			<version>0.2.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
@@ -57,7 +51,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.line</groupId>
-			<artifactId>line-bot-spring-servlet</artifactId>
+			<artifactId>line-bot-servlet</artifactId>
 			<version>0.2.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
