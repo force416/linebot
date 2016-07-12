@@ -15,4 +15,9 @@ line聊天機器人
 - Channel Secret
 - Channel MID
 
+包成 srping boot jar 後，執行時需代入系統參數
+``` bash
+$ java -Dline.bot.channelId=$CHANNELID -Dline.bot.channelMid=$CHANNELMID -Dline.bot.channelSecret=$CHANNELSECRET -jar linebot.jar
+```
+
 將程式佈署完成後將`callback url`註冊回line bot api 的官網 (https://developers.line.me)
