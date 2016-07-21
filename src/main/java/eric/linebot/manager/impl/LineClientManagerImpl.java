@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.linecorp.bot.client.LineBotClient;
@@ -17,6 +19,8 @@ import eric.linebot.manager.LineClientManger;
 @Service("lineClientManager")
 public class LineClientManagerImpl implements LineClientManger {
 	
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	
 	@Resource
 	private LineBotClient lineBotClient;
 	
@@ -27,6 +31,10 @@ public class LineClientManagerImpl implements LineClientManger {
 			if (content instanceof TextContent) {
 				TextContent text = (TextContent) content;
 				lineBotClient.sendText(text.getFrom(), text.getText());
+			} else {
+				
+				lineBotClient.sendText(System.getProperty("line.bot.channelMid"), "pi~ka~chu~~~");
+				lineBotClient.sendImage(System.getProperty("line.bot.channelMid"), "http://i.imgur.com/n5IwKuu.png", "http://i.imgur.com/n5IwKuu.png");
 			}
 		}
 		return false;
