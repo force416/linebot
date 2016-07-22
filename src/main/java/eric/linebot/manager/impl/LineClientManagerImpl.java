@@ -43,7 +43,7 @@ public class LineClientManagerImpl implements LineClientManger {
 			} else {
 			//其它種類訊息
 				AbstractContent ct = (AbstractContent) content;
-				logger.debug(gson.toJson(ct));
+				logger.info(gson.toJson(ct));
 				lineBotClient.sendText(ct.getFrom(), "pi~ka~chu~~~");
 				lineBotClient.sendImage(ct.getFrom(),
 						"http://i.imgur.com/n5IwKuu.png",
@@ -55,7 +55,7 @@ public class LineClientManagerImpl implements LineClientManger {
 			List<String> userProfileList = new ArrayList<String>();
 			userProfileList.add(userMid);
 			UserProfileResponse rp = lineBotClient.getUserProfile(userProfileList);
-			logger.debug(gson.toJson(rp.getContacts().get(0)));
+			logger.info(gson.toJson(rp.getContacts().get(0)));
 		}
 		
 		return false;
