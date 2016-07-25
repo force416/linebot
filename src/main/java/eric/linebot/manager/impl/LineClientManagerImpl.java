@@ -1,5 +1,6 @@
 package eric.linebot.manager.impl;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +9,6 @@ import javax.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import com.google.gson.Gson;
 import com.linecorp.bot.client.LineBotClient;
@@ -76,7 +76,7 @@ public class LineClientManagerImpl implements LineClientManger {
 	 */
 	private void queryImgurImageAndSendMessage(String keyword, String mid) throws Exception {
 		//關鍵字查詢imgur圖片
-		List<ImgurImageModel> imgurImageModelList = imgurApiService.gallerySearch(new ImgurSearchImageModel(keyword, "top", "", ""));
+		List<ImgurImageModel> imgurImageModelList = imgurApiService.gallerySearch(new ImgurSearchImageModel(URLEncoder.encode(keyword, "UTF-8"), "top", "", ""));
 		if (imgurImageModelList == null || imgurImageModelList.isEmpty()) {
 			this.sendDefaultMessage(mid);
 		}
