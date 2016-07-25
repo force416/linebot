@@ -30,9 +30,9 @@ public class ImgurApiServiceTest {
 		List<ImgurImageModel> result = new ArrayList<ImgurImageModel>();
 		try {
 			q.setQ("dog");
-			q.setSize("small");
+			q.setSize("");
 			q.setSort("top");
-			q.setType("jpg");
+			q.setType("");
 			result = imgurApiService.gallerySearch(q);
 			Assert.assertTrue(result != null && !result.isEmpty());
 		} catch (Exception e) {

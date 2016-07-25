@@ -76,15 +76,14 @@ public class LineClientManagerImpl implements LineClientManger {
 	 */
 	private void queryImgurImageAndSendMessage(String keyword, String mid) throws Exception {
 		//關鍵字查詢imgur圖片
-		List<ImgurImageModel> imgurImageModelList = imgurApiService.gallerySearch(new ImgurSearchImageModel(keyword, "top", "jpg", "small"));
+		List<ImgurImageModel> imgurImageModelList = imgurApiService.gallerySearch(new ImgurSearchImageModel(keyword, "top", "", ""));
 		if (imgurImageModelList == null || imgurImageModelList.isEmpty()) {
 			this.sendDefaultMessage(mid);
 		}
 		for (ImgurImageModel model : imgurImageModelList) {
-			if (model.getLink().indexOf(".jpg") != -1) {
+			//圖片的link才發送訊息
+			if (model.getLink().indexOf(".jpg") != -1 || model.getLink().indexOf(".png") != -1) {
 				lineBotClient.sendImage(mid, model.getLink(), model.getLink());
-			} else {
-				lineBotClient.sendText(mid, model.getLink());
 			}
 		}
 	}
