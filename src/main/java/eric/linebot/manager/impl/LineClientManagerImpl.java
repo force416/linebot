@@ -18,6 +18,9 @@ import com.linecorp.bot.model.content.Content;
 import com.linecorp.bot.model.content.TextContent;
 import com.linecorp.bot.model.profile.UserProfileResponse;
 
+import eric.linebot.api.ImgurApiService;
+import eric.linebot.api.model.ImgurImageModel;
+import eric.linebot.api.model.ImgurSearchImageModel;
 import eric.linebot.manager.LineClientManger;
 
 @Service("lineClientManager")
@@ -27,27 +30,33 @@ public class LineClientManagerImpl implements LineClientManger {
 
 	@Resource
 	private LineBotClient lineBotClient;
-
+	
+	@Resource
+	private ImgurApiService imgurApiService;
+	
 	private Gson gson = new Gson();
 
 	@Override
-	public boolean callback(List<Event> events) throws LineBotAPIException {
+	public boolean callback(List<Event> events) throws Exception {
 		for (Event event : events) {
 			Content content = event.getContent();
 			String userMid = null;
-			//訊息
+			//文字訊息
 			if (content instanceof TextContent) {
 				TextContent text = (TextContent) content;
-				lineBotClient.sendText(text.getFrom(), text.getText());
+				//關鍵字查詢imgur圖片
+				List<ImgurImageModel> imgurImageModelList = imgurApiService.gallerySearch(new ImgurSearchImageModel(text.getText(), "top", "jpg", "small"));
+				if (imgurImageModelList == null || imgurImageModelList.isEmpty()) {
+					this.sendDefaultMessage(text.getFrom());
+				}
+				for (ImgurImageModel model : imgurImageModelList) {
+					lineBotClient.sendImage(text.getFrom(), model.getLink(), model.getLink());
+				}
 				userMid = text.getFrom();
 			} else {
 			//其它種類訊息
 				AbstractContent ct = (AbstractContent) content;
-				logger.info(gson.toJson(ct));
-				lineBotClient.sendText(ct.getFrom(), "pi~ka~chu~~~");
-				lineBotClient.sendImage(ct.getFrom(),
-						"http://i.imgur.com/n5IwKuu.png",
-						"http://i.imgur.com/n5IwKuu.png");
+				this.sendDefaultMessage(ct.getFrom());
 				userMid = ct.getFrom();
 			}
 			
@@ -60,5 +69,8 @@ public class LineClientManagerImpl implements LineClientManger {
 		
 		return false;
 	}
-
+	
+	private void sendDefaultMessage(String mid) throws Exception {
+		lineBotClient.sendText(mid, "sorry~卡丘看不懂唷~啾咪^.<");
+	}
 }

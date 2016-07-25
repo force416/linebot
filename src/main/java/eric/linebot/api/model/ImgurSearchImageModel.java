@@ -24,6 +24,17 @@ public class ImgurSearchImageModel {
 	 */
 	private String size;
 	
+	public ImgurSearchImageModel() {
+		super();
+	}
+	
+	public ImgurSearchImageModel(String q, String sort, String type, String size) {
+		setQ(q);
+		setSort(sort);
+		setType(type);
+		setSize(size);
+	}
+	
 	public String getSort() {
 		return sort;
 	}

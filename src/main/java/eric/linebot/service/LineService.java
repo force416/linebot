@@ -20,6 +20,11 @@ public class LineService {
 	@Resource
 	private LineClientManger lineClientManger;
 	
+	/**
+	 * Line收到訊息時會呼叫的callback function
+	 * @param events
+	 * @throws LineBotAPIException
+	 */
 	@RequestMapping("/callback")
 	public void callback(@LineBotMessages List<Event> events) throws LineBotAPIException {
 		lineClientManger.callback(events);

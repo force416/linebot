@@ -11,6 +11,7 @@ public interface LineClientManger {
 	 * @param events
 	 * @return
 	 * @throws LineBotAPIException
+	 * @throws Exception 
 	 */
-	public boolean callback(List<Event> events) throws LineBotAPIException;
+	public boolean callback(List<Event> events) throws LineBotAPIException, Exception;
 }
