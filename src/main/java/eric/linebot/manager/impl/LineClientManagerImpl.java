@@ -8,10 +8,10 @@ import javax.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.google.gson.Gson;
 import com.linecorp.bot.client.LineBotClient;
-import com.linecorp.bot.client.exception.LineBotAPIException;
 import com.linecorp.bot.model.callback.Event;
 import com.linecorp.bot.model.content.AbstractContent;
 import com.linecorp.bot.model.content.Content;
@@ -44,15 +44,9 @@ public class LineClientManagerImpl implements LineClientManger {
 			//文字訊息
 			if (content instanceof TextContent) {
 				TextContent text = (TextContent) content;
-				//關鍵字查詢imgur圖片
-				List<ImgurImageModel> imgurImageModelList = imgurApiService.gallerySearch(new ImgurSearchImageModel(text.getText(), "top", "jpg", "small"));
-				if (imgurImageModelList == null || imgurImageModelList.isEmpty()) {
-					this.sendDefaultMessage(text.getFrom());
-				}
-				for (ImgurImageModel model : imgurImageModelList) {
-					lineBotClient.sendImage(text.getFrom(), model.getLink(), model.getLink());
-				}
 				userMid = text.getFrom();
+				//關鍵字查詢imgur圖片
+				this.queryImgurImageAndSendMessage(text.getText(), userMid);
 			} else {
 			//其它種類訊息
 				AbstractContent ct = (AbstractContent) content;
@@ -72,5 +66,26 @@ public class LineClientManagerImpl implements LineClientManger {
 	
 	private void sendDefaultMessage(String mid) throws Exception {
 		lineBotClient.sendText(mid, "sorry~卡丘看不懂唷~啾咪^.<");
+	}
+	
+	/**
+	 * 發送imgur圖片查詢結果
+	 * @param keyword	查詢圖片關鍵字
+	 * @param mid		發送對象mid
+	 * @throws Exception
+	 */
+	private void queryImgurImageAndSendMessage(String keyword, String mid) throws Exception {
+		//關鍵字查詢imgur圖片
+		List<ImgurImageModel> imgurImageModelList = imgurApiService.gallerySearch(new ImgurSearchImageModel(keyword, "top", "jpg", "small"));
+		if (imgurImageModelList == null || imgurImageModelList.isEmpty()) {
+			this.sendDefaultMessage(mid);
+		}
+		for (ImgurImageModel model : imgurImageModelList) {
+			if (model.getLink().indexOf(".jpg") != -1) {
+				lineBotClient.sendImage(mid, model.getLink(), model.getLink());
+			} else {
+				lineBotClient.sendText(mid, model.getLink());
+			}
+		}
 	}
 }
