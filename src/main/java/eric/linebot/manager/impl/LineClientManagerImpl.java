@@ -80,9 +80,14 @@ public class LineClientManagerImpl implements LineClientManger {
 		if (imgurImageModelList == null || imgurImageModelList.isEmpty()) {
 			this.sendDefaultMessage(mid);
 		}
+		int cnt = 0;
 		for (ImgurImageModel model : imgurImageModelList) {
+			if (cnt == 10) {
+				break;
+			}
 			//圖片的link才發送訊息
 			if (model.getLink().indexOf(".jpg") != -1 || model.getLink().indexOf(".png") != -1) {
+				cnt++;
 				lineBotClient.sendImage(mid, model.getLink(), model.getLink());
 			}
 		}
