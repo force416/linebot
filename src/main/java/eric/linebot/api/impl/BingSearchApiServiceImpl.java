@@ -23,7 +23,7 @@ import eric.linebot.api.model.BingImageSearchModel;
 @Service("bingSearchApiService")
 public class BingSearchApiServiceImpl implements BingSearchApiService {
 
-	@Value("${imgur.api}")
+	@Value("${bing.api}")
 	private String url;
 	
 	@Value("${bing.sub.key}")
