@@ -18,7 +18,10 @@ import com.linecorp.bot.model.content.Content;
 import com.linecorp.bot.model.content.TextContent;
 import com.linecorp.bot.model.profile.UserProfileResponse;
 
+import eric.linebot.api.BingSearchApiService;
 import eric.linebot.api.ImgurApiService;
+import eric.linebot.api.model.BingImageModel;
+import eric.linebot.api.model.BingImageSearchModel;
 import eric.linebot.api.model.ImgurImageModel;
 import eric.linebot.api.model.ImgurSearchImageModel;
 import eric.linebot.manager.LineClientManger;
@@ -34,6 +37,9 @@ public class LineClientManagerImpl implements LineClientManger {
 	@Resource
 	private ImgurApiService imgurApiService;
 	
+	@Resource
+	private BingSearchApiService bingSearchApiService;
+	
 	private Gson gson = new Gson();
 
 	@Override
@@ -46,7 +52,9 @@ public class LineClientManagerImpl implements LineClientManger {
 				TextContent text = (TextContent) content;
 				userMid = text.getFrom();
 				//關鍵字查詢imgur圖片
-				this.queryImgurImageAndSendMessage(text.getText(), userMid);
+//				this.queryImgurImageAndSendMessage(text.getText(), userMid);
+				//關鍵字查詢bing圖片
+				this.queryBingImageAndSendMessage(text.getText(), userMid);
 			} else {
 			//其它種類訊息
 				AbstractContent ct = (AbstractContent) content;
@@ -90,6 +98,23 @@ public class LineClientManagerImpl implements LineClientManger {
 				cnt++;
 				lineBotClient.sendImage(mid, model.getLink(), model.getLink());
 			}
+		}
+	}
+	
+	/**
+	 * 發送Bing圖片查詢結果
+	 * @param keyword	查詢圖片關鍵字
+	 * @param mid		發送對象mid
+	 * @throws Exception
+	 */
+	private void queryBingImageAndSendMessage(String keyword, String mid) throws Exception {
+		//關鍵字查詢圖片
+		List<BingImageModel> bingImageModelList = bingSearchApiService.imageSearch(new BingImageSearchModel(URLEncoder.encode(keyword, "UTF-8"), 10));
+		if (bingImageModelList == null || bingImageModelList.isEmpty()) {
+			this.sendDefaultMessage(mid);
+		}
+		for (BingImageModel model : bingImageModelList) {
+			lineBotClient.sendImage(mid, model.getContentUrl(), model.getContentUrl());
 		}
 	}
 }
