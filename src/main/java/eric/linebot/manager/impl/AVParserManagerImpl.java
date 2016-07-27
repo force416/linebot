@@ -46,6 +46,7 @@ public class AVParserManagerImpl implements AVParserManager {
         	model.setCoverUrl(coverUrl);	//封面url
         	model.setName(name);			//名稱
         	resultList.add(model);
+        	cnt++;
         }
         
         //如果只有一筆資料，把劇照的資料塞進model
