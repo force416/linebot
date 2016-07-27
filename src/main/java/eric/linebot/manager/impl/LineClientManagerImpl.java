@@ -151,8 +151,7 @@ public class LineClientManagerImpl implements LineClientManger {
 	 * @param keyword
 	 * @throws Exception
 	 */
-	private void queryAVAndSendMessage(String keyword, String mid)
-			throws Exception {
+	private void queryAVAndSendMessage(String keyword, String mid) throws Exception {
 		List<AVModel> modelList = aVParserManager.search(keyword);
 		if (modelList != null && !modelList.isEmpty()) {
 			//只有一筆資料
@@ -176,6 +175,8 @@ public class LineClientManagerImpl implements LineClientManger {
 					lineBotClient.sendImage(mid, model.getCoverUrl(), model.getCoverUrl());
 				}
 			}
+		} else {
+			this.sendDefaultMessage(mid);
 		}
 	}
 
@@ -186,6 +187,6 @@ public class LineClientManagerImpl implements LineClientManger {
 	 * @return
 	 */
 	private boolean isAVsearch(String keyword) {
-		return StringUtils.startsWithIgnoreCase(keyword, "av:");
+		return StringUtils.startsWithIgnoreCase(keyword, "av:") && keyword.length() > 3;
 	}
 }
