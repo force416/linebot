@@ -31,7 +31,9 @@ public class AVParserManagerImpl implements AVParserManager {
         List<AVModel> resultList = new ArrayList<AVModel>();
         
         String detailLink = null;
+        int cnt = 0;
         for (Element src : ws) {
+        	if (cnt == 10) { break; } //最多十筆
         	Elements each = src.select("[src]");
         	String id = src.select("date").get(0).text();
         	String date = src.select("date").get(1).text();
