@@ -23,7 +23,7 @@ $ java -Dline.bot.channelId=$CHANNELID -Dline.bot.channelMid=$CHANNELMID -Dline.
 將程式佈署完成後將`callback url`註冊回line bot api 的官網 (https://developers.line.me)
 
 ### Line 機器人的QR Code
-![QR Code](https://qr-official.line.me/sid/L/nhs4801n.png)
+(https://qr-official.line.me/sid/L/nhs4801n.png)
 
 ### 使用方式
 * 輸入關鍵字查詢bing search api 圖片
