@@ -26,6 +26,7 @@ import eric.linebot.api.model.BingImageModel;
 import eric.linebot.api.model.BingImageSearchModel;
 import eric.linebot.api.model.ImgurImageModel;
 import eric.linebot.api.model.ImgurSearchImageModel;
+import eric.linebot.dao.QueryLogDao;
 import eric.linebot.dao.model.QueryLog;
 import eric.linebot.manager.AVParserManager;
 import eric.linebot.manager.LineClientManger;
@@ -48,6 +49,9 @@ public class LineClientManagerImpl implements LineClientManger {
 	@Resource
 	private AVParserManager aVParserManager;
 
+	@Resource
+	private QueryLogDao queryLogDao;
+	
 	private Gson gson = new Gson();
 
 	@Override
@@ -90,6 +94,7 @@ public class LineClientManagerImpl implements LineClientManger {
 				ql.setName(rp.getContacts().get(0).getDisplayName());
 				ql.setKeyword(text.getText());
 				ql.setCreateDate(new Date());
+				queryLogDao.save(ql);
 			}
 		}
 
