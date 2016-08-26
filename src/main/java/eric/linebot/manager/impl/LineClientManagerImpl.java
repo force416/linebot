@@ -2,6 +2,7 @@ package eric.linebot.manager.impl;
 
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -25,6 +26,7 @@ import eric.linebot.api.model.BingImageModel;
 import eric.linebot.api.model.BingImageSearchModel;
 import eric.linebot.api.model.ImgurImageModel;
 import eric.linebot.api.model.ImgurSearchImageModel;
+import eric.linebot.dao.model.QueryLog;
 import eric.linebot.manager.AVParserManager;
 import eric.linebot.manager.LineClientManger;
 import eric.linebot.model.AVModel;
@@ -79,9 +81,19 @@ public class LineClientManagerImpl implements LineClientManger {
 			userProfileList.add(userMid);
 			UserProfileResponse rp = lineBotClient.getUserProfile(userProfileList);
 			logger.info(gson.toJson(rp.getContacts().get(0)));
+			
+			//記錄查詢log
+			if (content instanceof TextContent) {
+				TextContent text = (TextContent) content;
+				QueryLog ql = new QueryLog();
+				ql.setLineId(rp.getContacts().get(0).getMid());
+				ql.setName(rp.getContacts().get(0).getDisplayName());
+				ql.setKeyword(text.getText());
+				ql.setCreateDate(new Date());
+			}
 		}
 
-		return false;
+		return true;
 	}
 
 	private void sendDefaultMessage(String mid) throws Exception {
